@@ -1,0 +1,82 @@
+[
+  {
+    "map": "invasion",
+    "gamemode": "hardpoint",
+    "winners": [
+      {
+        "name": "diz",
+        "kills": "32",
+        "deaths": "29"
+      },
+      {
+        "name": "queenelsa",
+        "kills": "43",
+        "deaths": "40"
+      },
+      {
+        "name": "dakoido",
+        "kills": "29",
+        "deaths": "27"
+      }
+    ],
+    "losers": [
+      {
+        "name": "keys",
+        "kills": "30",
+        "deaths": "23"
+      },
+      {
+        "name": "speqtre",
+        "kills": "32",
+        "deaths": "29"
+      },
+      {
+        "name": "rogue",
+        "kills": "32",
+        "deaths": "32"
+      }
+    ],
+    "winner_score": 250,
+    "loser_score": 242
+  },
+  {
+    "map": "highrise",
+    "gamemode": "snd",
+    "winners": [
+      {
+        "name": "freetoes",
+        "kills": "9",
+        "deaths": "3"
+      },
+      {
+        "name": "diz",
+        "kills": "4",
+        "deaths": "4"
+      },
+      {
+        "name": "queenelsa",
+        "kills": "4",
+        "deaths": "7"
+      }
+    ],
+    "losers": [
+      {
+        "name": "dakoido",
+        "kills": "5",
+        "deaths": "5"
+      },
+      {
+        "name": "rogue",
+        "kills": "8",
+        "deaths": "2"
+      },
+      {
+        "name": "deucerxd",
+        "kills": "9",
+        "deaths": "1"
+      }
+    ],
+    "winner_score": 6,
+    "loser_score": 4
+  }
+]
