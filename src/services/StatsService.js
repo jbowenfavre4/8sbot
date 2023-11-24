@@ -7,18 +7,21 @@ class StatsService {
         console.log('Stats service created')
     }
 
-    generalStats(jsonList) {
-        let winsMap = this.#getPlayerWinsMap(jsonList)
-        let lossesMap = this.#getPlayerLossesMap(jsonList)
-        let length = jsonList.length
-        let killmap = this.#countKills(jsonList)
-        let deathmap = this.#countDeaths(jsonList)
+    generalStats(matchesList, playersList) {
+        let winsMap = this.#getPlayerWinsMap(matchesList, playersList)
+        let lossesMap = this.#getPlayerLossesMap(matchesList, playersList)
+        let length = matchesList.length
+        let killmap = this.#countKills(matchesList, playersList)
+        let deathmap = this.#countDeaths(matchesList, playersList)
         let mostKills = this.#getHighestFromMap(killmap, 5)
         let kdMap = this.#getKDs(killmap, deathmap)
         let bestKD = this.#getHighestFromMap(kdMap, 5)
         let mostWins = this.#getHighestFromMap(winsMap, 5)
         let winrateMap = this.#getWinRates(winsMap, lossesMap)
         let bestWinRate = this.#getHighestFromMap(winrateMap, 5)
+
+        console.log(killmap)
+        console.log(deathmap)
 
         let embedData = [
             {
@@ -53,7 +56,7 @@ class StatsService {
             embedData)
     }
 
-    #countKills(jsonList) {
+    #countKills(jsonList, players) {
         const kills = new Map([])
         for (let i = 0; i < jsonList.length; i++) {
             let match = jsonList[i]
@@ -72,10 +75,18 @@ class StatsService {
                 kills.set(player.name, parseInt(kills.get(player.name)) + parseInt(player.kills))
             }
         }
+
+        players.forEach(player => {
+            let playerName = player.name
+            if (!kills.has(playerName)) {
+                kills.set(playerName, 0)
+            }
+        })
+
         return kills
     }
 
-    #countDeaths(jsonList) {
+    #countDeaths(jsonList, players) {
         const deaths = new Map([])
         for (let i = 0; i < jsonList.length; i++) {
             let match = jsonList[i]
@@ -94,6 +105,14 @@ class StatsService {
                 deaths.set(player.name, (parseInt(deaths.get(player.name)) + parseInt(player.deaths)).toFixed(3))
             }
         }
+
+        players.forEach(player => {
+            let playerName = player.name
+            if (!deaths.has(playerName)) {
+                deaths.set(playerName, 0)
+            }
+        })
+
         return deaths
     }
 
@@ -121,7 +140,11 @@ class StatsService {
             const deaths = deathsMap.get(name);
       
             // Calculate the combined value (kills/deaths) and add to the new map
-            kdMap.set(name, (parseInt(kills)/parseInt(deaths)).toFixed(3));
+            if (parseInt(deaths) == 0) {
+                kdMap.set(name, (parseInt(kills)/1));
+            } else {
+                kdMap.set(name, (parseInt(kills)/parseInt(deaths)).toFixed(3));
+            }  
           }
         });
         return kdMap;
@@ -153,7 +176,7 @@ class StatsService {
         return s
       }
 
-    #getPlayerWinsMap(data) {
+    #getPlayerWinsMap(data, players) {
         const playerWinsMap = new Map();
 
         data.forEach(match => {
@@ -166,10 +189,17 @@ class StatsService {
                 }
             });
         });
+
+        players.forEach(player => {
+            let playerName = player.name
+            if (!playerWinsMap.has(playerName)) {
+                playerWinsMap.set(playerName, 0)
+            }
+        })
         return playerWinsMap;
     }
 
-    #getPlayerLossesMap(data) {
+    #getPlayerLossesMap(data, players) {
         const playerLossesMap = new Map();
 
         data.forEach(match => {
@@ -182,6 +212,12 @@ class StatsService {
                 }
             });
         });
+        players.forEach(player => {
+            let playerName = player.name
+            if (!playerLossesMap.has(playerName)) {
+                playerLossesMap.set(playerName, 0)
+            }
+        })
         return playerLossesMap;
     }
 

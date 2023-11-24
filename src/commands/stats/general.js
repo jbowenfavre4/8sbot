@@ -12,8 +12,9 @@ module.exports = {
         const statsService = this.statsService
 
         let data = fileService.getMatchFileData()
+		let players = fileService.getPlayerFileData()
 
-        await interaction.reply({ embeds: [statsService.generalStats(data)] })
+        await interaction.reply({ embeds: [statsService.generalStats(data, players)] })
         
 		
 	},
