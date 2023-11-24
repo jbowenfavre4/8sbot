@@ -1,6 +1,7 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, Embed } = require('discord.js');
 const { gamemodes } = require('../../data/gamemodes')
 const { maps } = require('../../data/maps');
+const EmbedService = require('../../services/EmbedService')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -44,7 +45,7 @@ module.exports = {
             }
             await interaction.reply("Failed to record match:\n" + validation)
         } else {
-            await interaction.reply(getMatchAddedSuccessReply(interaction))
+            await interaction.reply({ embeds: [EmbedService.getMatchEmbed(interaction.options)] })
         }
         
 		
