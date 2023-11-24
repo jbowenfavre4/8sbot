@@ -1,0 +1,22 @@
+[
+  {
+    "map": "invasion",
+    "gamemode": "hardpoint",
+    "winners": [
+      {
+        "name": "diz",
+        "kills": "25",
+        "deaths": "13"
+      }
+    ],
+    "losers": [
+      {
+        "name": "seth",
+        "kills": "24",
+        "deaths": "23"
+      }
+    ],
+    "winner_score": 250,
+    "loser_score": 143
+  }
+]

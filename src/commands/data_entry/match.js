@@ -44,14 +44,14 @@ module.exports = {
             }
             await interaction.reply("Failed to record match:\n" + validation)
         } else {
-            await interaction.reply(getInteractReply(interaction))
+            await interaction.reply(getMatchAddedSuccessReply(interaction))
         }
         
 		
 	},
 };
 
-function getInteractReply(interaction) {
+function getMatchAddedSuccessReply(interaction) {
     return `Match logged successfully.
     
     Map: ${interaction.options.getString('map')} ${interaction.options.getString('gamemode')}

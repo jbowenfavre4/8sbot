@@ -11,7 +11,7 @@ module.exports = {
         const fileService = this.fileService
         const statsService = this.statsService
 
-        let data = fileService.getFileContents()
+        let data = fileService.getMatchFileData()
 
         await interaction.reply({ embeds: [statsService.generalStats(data)] })
         
