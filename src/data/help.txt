@@ -1,0 +1,19 @@
+8sBot is a discord bot created by diz to record the results of MW3 custom 8's games. 
+
+Commands
+/add - adds a player to the record. This must be done before a player can be included in a match. A name must be provided. Names are case sensitive, meaning that "diz" and "Diz" will be treated as two different players. Once a player is added, that exact name should be used for that player every time one of their matches is recorded, so that the stats remain accurate.
+
+/match - adds a match to the record. The command sender must provide a gamemode, map, the winners, the losers, and the score. The list of winners and losers must be entered in the following format:
+
+name:K:D,name:K:D,name:K:D,name:K:D
+
+Example: "Dashy:30:22,Karma:29:24,Crimsix:25:21"
+
+Each team can have any number of players, but they must each be separated by a comma. The string should have no spaces. If one or more players on either team has not been added, the match will not be recorded, and the user will be prompted to double check that all players have been added. The winners and losers will be entered separately in the same format. 
+
+/general - displays overall stats based on all recorded matches. 
+
+/help - displays this message. 
+
+
+More commands with more specific statistics options will be added in the future. 
