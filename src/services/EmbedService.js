@@ -7,7 +7,7 @@ class EmbedService {
         const embed = new EmbedBuilder()
             .setColor(0x0099FF)
             .setTitle(title)
-            .setAuthor({ name: '8sbot', iconURL: 'https://i.imgur.com/AfFp7pu.png'})
+            .setAuthor({ name: '8sbot', iconURL: 'https://pbs.twimg.com/media/EK-5nSWWsAAeQLJ?format=jpg&name=240x240'})
 	        .setDescription(description)
         
         for (const field of data) {
