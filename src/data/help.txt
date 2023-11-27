@@ -1,15 +1,18 @@
 8sBot is a discord bot created by diz to record the results of MW3 custom 8's games. 
 
 Commands
-/add - adds a player to the record. This must be done before a player can be included in a match. A name must be provided. Names are case sensitive, meaning that "diz" and "Diz" will be treated as two different players. Once a player is added, that exact name should be used for that player every time one of their matches is recorded, so that the stats remain accurate.
+/register - Each player that wishes to participate will need to use this command once in the server to register before they can be added to any matches.
 
-/match - adds a match to the record. The command sender must provide a gamemode, map, the winners, the losers, and the score. The list of winners and losers must be entered in the following format:
+/recordmatch - adds a match to the record. The command sender must provide a gamemode, map, the winners, the losers, their KDOs (Kills/Deaths/Objective score) and the score. When entering the winners and losers, you will select the user based on their discord username (NOT display name) from a list. If the player has not registered, they will not appear in the list. You can start typing their username and the list will filter based on what you have typed. 
 
-name:K:D,name:K:D,name:K:D,name:K:D
+KDOs must be entered in the following format: K/D/O
 
-Example: "Dashy:30:22,Karma:29:24,Crimsix:25:21"
+Example: "24/21/75"
 
-Each team can have any number of players, but they must each be separated by a comma. The string should have no spaces. If one or more players on either team has not been added, the match will not be recorded, and the user will be prompted to double check that all players have been added. The winners and losers will be entered separately in the same format. 
+Objective score: 
+    For Hardpoint, objective score is hill time in seconds. For example: 1:16 hill time would be entered as 76 (1:16 = 76 seconds)
+    For SnD, objective score is number of plants.
+    For Control, objectve score is number of captures. 
 
 /general - displays overall stats based on all recorded matches. 
 

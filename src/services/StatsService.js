@@ -17,12 +17,12 @@ class StatsService {
         let length = matchesList.length
         let killmap = this.#countKills(matchesList, playersList)
         let deathmap = this.#countDeaths(matchesList, playersList)
-        let mostKills = this.getHighestFromMap(killmap, 5)
+        let mostKills = StatsService.getHighestFromMap(killmap, 5)
         let kdMap = this.#getKDs(killmap, deathmap)
-        let bestKD = this.getHighestFromMap(kdMap, 5)
-        let mostWins = this.getHighestFromMap(winsMap, 5)
+        let bestKD = StatsService.getHighestFromMap(kdMap, 5)
+        let mostWins = StatsService.getHighestFromMap(winsMap, 5)
         let winrateMap = this.#getWinRates(winsMap, lossesMap)
-        let bestWinRate = this.getHighestFromMap(winrateMap, 5)
+        let bestWinRate = StatsService.getHighestFromMap(winrateMap, 5)
 
         let embedData = [
             {
