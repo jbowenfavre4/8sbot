@@ -34,7 +34,8 @@ class RegisterService {
         data.push(
             {
                 "name": user.username,
-                "id": user.id
+                "id": user.id,
+                "value": user.id
             }
         )
         this.#updateRegistry(data)

@@ -4,8 +4,6 @@ const { gamemodes } = require('../../data/gamemodes')
 const { maps } = require('../../data/maps');
 const EmbedService = require('../../services/EmbedService')
 
-const registered_players = RegisterService.getRegistry()
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('recordmatch')
@@ -103,7 +101,8 @@ module.exports = {
     async autocomplete(interaction) {
         
         const focusedValue = interaction.options.getFocused();
-		const choices = registered_players
+		const choices = RegisterService.getRegistry()
+        console.log(choices)
 		const filtered = choices.filter(choice => choice.name.startsWith(focusedValue));
 		await interaction.respond(
 			filtered.map(choice => ({ name: choice.name, value: choice.value })),
