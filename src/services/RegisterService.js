@@ -19,7 +19,7 @@ class RegisterService {
 
     checkIfPlayerRegistered(user) {
         let id = user.id
-        let data = this.getRegistry()
+        let data = RegisterService.getRegistry()
         let player = UtilityService.searchJSONList(data, "id", id)
         if (player != null) {
             return true
@@ -30,7 +30,7 @@ class RegisterService {
     }
 
     addPlayer(user) {
-        let data = this.getRegistry()
+        let data = RegisterService.getRegistry()
         data.push(
             {
                 "name": user.username,
