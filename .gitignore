@@ -2,3 +2,4 @@
 /node_modules
 src/data/data.json
 src/data/players.json
+src/data/registered_players.json
