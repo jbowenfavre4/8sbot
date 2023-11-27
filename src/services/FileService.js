@@ -148,6 +148,28 @@ class FileService {
         const playerExists = existingPlayers.some(player => player.name === name);
         return playerExists;
     }
+
+    getPlayerMatches(name) {
+        let matches = []
+
+        let matchData = this.getMatchFileData()
+        matchData.forEach(match => {
+            match.winners.forEach(player => {
+                if (player.name == name) {
+                    matches.push(match)
+                    return
+                }
+            })
+            match.losers.forEach(player => {
+                if (player.name == name) {
+                    matches.push(match)
+                    return
+                }
+            })
+        })
+        return matches
+    }
+
 }
 
 module.exports = FileService

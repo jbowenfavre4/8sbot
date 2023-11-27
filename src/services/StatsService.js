@@ -1,10 +1,14 @@
 const EmbedService = require('../services/EmbedService');
 const { embedService } = require('../services/EmbedService');
+const PlayerStatsService = require('./PlayerStatsService');
 
 class StatsService {
 
     constructor() {
+
+        this.playerStatsService = new PlayerStatsService()
         console.log('Stats service created')
+
     }
 
     generalStats(matchesList, playersList) {
@@ -13,15 +17,12 @@ class StatsService {
         let length = matchesList.length
         let killmap = this.#countKills(matchesList, playersList)
         let deathmap = this.#countDeaths(matchesList, playersList)
-        let mostKills = this.#getHighestFromMap(killmap, 5)
+        let mostKills = this.getHighestFromMap(killmap, 5)
         let kdMap = this.#getKDs(killmap, deathmap)
-        let bestKD = this.#getHighestFromMap(kdMap, 5)
-        let mostWins = this.#getHighestFromMap(winsMap, 5)
+        let bestKD = this.getHighestFromMap(kdMap, 5)
+        let mostWins = this.getHighestFromMap(winsMap, 5)
         let winrateMap = this.#getWinRates(winsMap, lossesMap)
-        let bestWinRate = this.#getHighestFromMap(winrateMap, 5)
-
-        console.log(killmap)
-        console.log(deathmap)
+        let bestWinRate = this.getHighestFromMap(winrateMap, 5)
 
         let embedData = [
             {
@@ -116,14 +117,14 @@ class StatsService {
         return deaths
     }
 
-    #getHighestFromMap(map, i) {
+    static getHighestFromMap(map, i) {
         const entriesArray = Array.from(map.entries());
         entriesArray.sort((a, b) => b[1] - a[1]);
         const topEntries = entriesArray.slice(0, i);
         return topEntries
     }
 
-    #getLowestFromMap(map, i) {
+    static getLowestFromMap(map, i) {
         const entriesArray = Array.from(map.entries());
         entriesArray.sort((a, b) => a[1] - b[1]);
         const bottomEntries = entriesArray.slice(0, i);
@@ -220,6 +221,8 @@ class StatsService {
         })
         return playerLossesMap;
     }
+
+
 
 }
 
