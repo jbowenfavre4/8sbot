@@ -102,7 +102,6 @@ module.exports = {
         
         const focusedValue = interaction.options.getFocused();
 		const choices = RegisterService.getRegistry()
-        console.log(choices)
 		const filtered = choices.filter(choice => choice.name.startsWith(focusedValue));
 		await interaction.respond(
 			filtered.map(choice => ({ name: choice.name, value: choice.value })),
