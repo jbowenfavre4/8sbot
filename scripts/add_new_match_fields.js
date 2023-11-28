@@ -6,7 +6,6 @@ const data = JSON.parse(fs.readFileSync(filename, 'utf-8'))
 
 let id = 1000
 data.forEach(match => {
-    console.log(match.match_id)
     if (match.match_id == undefined) {
         match.match_id = id
         id++
