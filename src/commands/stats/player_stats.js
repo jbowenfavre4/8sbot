@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { gamemodes } = require('../../data/gamemodes')
+const { gamemodes } = require('../../data/gamemodes');
+const PlayerStatsService = require('../../services/PlayerStatsService');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,7 +12,7 @@ module.exports = {
                 .setRequired(false)
                 .addChoices(...gamemodes)),
 	async execute(interaction) {
-        const playerStatsService = this.playerStatsService
+        const playerStatsService = PlayerStatsService
 
         let embed = ''
         let filter = interaction.options.getString('filter')

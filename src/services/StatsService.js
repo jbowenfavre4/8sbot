@@ -1,59 +1,87 @@
 const EmbedService = require('../services/EmbedService');
 const { embedService } = require('../services/EmbedService');
+const MatchService = require('./MatchService');
 const PlayerStatsService = require('./PlayerStatsService');
+const CountService = require('./CountService');
+const RegisterService = require('./RegisterService');
 
 class StatsService {
 
     constructor() {
 
-        this.playerStatsService = new PlayerStatsService()
+        this.playerStatsService = PlayerStatsService
         console.log('Stats service created')
-
     }
 
-    generalStats(matchesList, playersList) {
-        let winsMap = this.#getPlayerWinsMap(matchesList, playersList)
-        let lossesMap = this.#getPlayerLossesMap(matchesList, playersList)
-        let length = matchesList.length
-        let killmap = this.#countKills(matchesList, playersList)
-        let deathmap = this.#countDeaths(matchesList, playersList)
-        let mostKills = StatsService.getHighestFromMap(killmap, 5)
-        let kdMap = this.#getKDs(killmap, deathmap)
-        let bestKD = StatsService.getHighestFromMap(kdMap, 5)
-        let mostWins = StatsService.getHighestFromMap(winsMap, 5)
-        let winrateMap = this.#getWinRates(winsMap, lossesMap)
-        let bestWinRate = StatsService.getHighestFromMap(winrateMap, 5)
+    generalStats() {
+
+        let matches_list = MatchService.getMatches()
+        let counted_data = CountService.getAllPlayerStats(matches_list)
+
+        let most_kills_s = ``
+        CountService.sortPlayers(counted_data, 'kills').forEach(player => {
+            most_kills_s += `${player.kills} - ${RegisterService.getName(player.id)}\n`
+        })
+
+        let best_kd_s = ``
+        CountService.sortPlayers(counted_data, 'kd').forEach(player => {
+            best_kd_s += `${player.kd} - ${RegisterService.getName(player.id)}\n`
+        })
+
+        let best_wr_s = ``
+        CountService.sortPlayers(counted_data, 'wr').forEach(player => {
+            best_wr_s += `${player.wr} - ${RegisterService.getName(player.id)}\n`
+        })
+
+        let most_wins_s = ``
+        CountService.sortPlayers(counted_data, 'wins').forEach(player => {
+            most_wins_s += `${player.wins} - ${RegisterService.getName(player.id)}\n`
+        })
+
+        let most_matches_s = ``
+        CountService.sortPlayers(counted_data, 'totalMatches').forEach(player => {
+            most_matches_s += `${player.totalMatches} - ${RegisterService.getName(player.id)}\n`
+        })
+
+
+        console.log(most_kills_s)
 
         let embedData = [
             {
                 name: "Matches Played",
-                value: `${length}`
+                value: `${matches_list.length}`
             },
             {
                 name: "Most Kills",
-                value:`${this.#mapToString(mostKills)}`,
-                inline: true
-            },
-            {
-                name: "Best KD",
-                value:`${this.#mapToString(bestKD)}`,
+                value: most_kills_s,
                 inline: true
             },
             {
                 name: "Most Wins",
-                value: `${this.#mapToString(mostWins)}`,
+                value: most_wins_s,
                 inline: true
             },
             {
+                name: "Most Matches",
+                value: most_matches_s,
+                inline: true                 
+            },
+            {
+                name: "Best KD",
+                value: best_kd_s,
+                inline: true
+            },
+            
+            {
                 name: "Best Winrate (%)",
-                value: `${this.#mapToString(bestWinRate)}`,
+                value: best_wr_s,
                 inline: true
             }
         ]
 
         return EmbedService.getEmbeddedMessage(
             "General Stats", 
-            "A list of general stats based on all recorded matches.",
+            "---------- A list of general stats based on all recorded matches. ----------",
             embedData)
     }
 
@@ -86,144 +114,6 @@ class StatsService {
 
         return kills
     }
-
-    #countDeaths(jsonList, players) {
-        const deaths = new Map([])
-        for (let i = 0; i < jsonList.length; i++) {
-            let match = jsonList[i]
-            for (let i = 0; i < match.winners.length; i++) {
-                let player = match.winners[i]
-                if (!deaths.has(player.name)) {
-                    deaths.set(player.name, 0)
-                }
-                deaths.set(player.name, (parseInt(deaths.get(player.name)) + parseInt(player.deaths)).toFixed(3))
-            }
-            for (let i = 0; i < match.losers.length; i++) {
-                let player = match.losers[i]
-                if (!deaths.has(player.name)) {
-                    deaths.set(player.name, 0)
-                }
-                deaths.set(player.name, (parseInt(deaths.get(player.name)) + parseInt(player.deaths)).toFixed(3))
-            }
-        }
-
-        players.forEach(player => {
-            let playerName = player.name
-            if (!deaths.has(playerName)) {
-                deaths.set(playerName, 0)
-            }
-        })
-
-        return deaths
-    }
-
-    static getHighestFromMap(map, i) {
-        const entriesArray = Array.from(map.entries());
-        entriesArray.sort((a, b) => b[1] - a[1]);
-        const topEntries = entriesArray.slice(0, i);
-        return topEntries
-    }
-
-    static getLowestFromMap(map, i) {
-        const entriesArray = Array.from(map.entries());
-        entriesArray.sort((a, b) => a[1] - b[1]);
-        const bottomEntries = entriesArray.slice(0, i);
-        return bottomEntries
-    }
-    
-    #getKDs(killsMap, deathsMap) {
-        const kdMap = new Map();
-      
-        // Iterate through one of the maps (assuming killsMap in this example)
-        killsMap.forEach((kills, name) => {
-          // Check if the corresponding player exists in the deathsMap
-          if (deathsMap.has(name)) {
-            const deaths = deathsMap.get(name);
-      
-            // Calculate the combined value (kills/deaths) and add to the new map
-            if (parseInt(deaths) == 0) {
-                kdMap.set(name, (parseInt(kills)/1));
-            } else {
-                kdMap.set(name, (parseInt(kills)/parseInt(deaths)).toFixed(3));
-            }  
-          }
-        });
-        return kdMap;
-      }
-
-      #getWinRates(winsMap, lossesMap) {
-        const kdMap = new Map();
-      
-        // Iterate through one of the maps (assuming killsMap in this example)
-        winsMap.forEach((wins, name) => {
-          // Check if the corresponding player exists in the deathsMap
-          if (lossesMap.has(name)) {
-            const losses = lossesMap.get(name);
-      
-            // Calculate the combined value (kills/deaths) and add to the new map
-            kdMap.set(name, (100*(parseInt(wins)/(parseInt(losses) + parseInt(wins)))).toFixed(2));
-          }
-        });
-        return kdMap;
-      }
-
-      #mapToString(map) {
-        let s = ""
-        map.forEach((value, key, map) => {
-            // Note: The order of parameters in forEach is (value, key, map)
-            let playerData = value.toString().split(',')
-            s += `${[...map.keys()].indexOf(key) + 1}. ${playerData[0]}: ${playerData[1]}\n`;
-          });
-        return s
-      }
-
-    #getPlayerWinsMap(data, players) {
-        const playerWinsMap = new Map();
-
-        data.forEach(match => {
-            match.winners.forEach(winner => {
-                let playerName = winner.name;
-                if (playerWinsMap.has(playerName)) {
-                    playerWinsMap.set(playerName, playerWinsMap.get(playerName) + 1);
-                } else {
-                    playerWinsMap.set(playerName, 1);
-                }
-            });
-        });
-
-        players.forEach(player => {
-            let playerName = player.name
-            if (!playerWinsMap.has(playerName)) {
-                playerWinsMap.set(playerName, 0)
-            }
-        })
-        return playerWinsMap;
-    }
-
-    #getPlayerLossesMap(data, players) {
-        const playerLossesMap = new Map();
-
-        data.forEach(match => {
-            match.losers.forEach(loser => {
-                let playerName = loser.name;
-                if (playerLossesMap.has(playerName)) {
-                    playerLossesMap.set(playerName, playerLossesMap.get(playerName) + 1);
-                } else {
-                    playerLossesMap.set(playerName, 1);
-                }
-            });
-        });
-        players.forEach(player => {
-            let playerName = player.name
-            if (!playerLossesMap.has(playerName)) {
-                playerLossesMap.set(playerName, 0)
-            }
-        })
-        return playerLossesMap;
-    }
-
-
-
 }
 
 module.exports = StatsService

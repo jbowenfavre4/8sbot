@@ -11,16 +11,16 @@ class PlayerStatsService {
         console.log('Player stats service created')
     }
 
-    getPlayerStats(player, gamemode_filter) {
+    static getPlayerStats(player, gamemode_filter) {
         let matches = []
         if (gamemode_filter != null) {
             matches = MatchService.getPlayerMatchesByGamemode(player, gamemode_filter)
         } else {
             matches = MatchService.getPlayerMatches(player)
         }
-        let statsObj = this.#getPlayerStatsObj(player, matches)
+        let statsObj = PlayerStatsService.#getPlayerStatsObj(player, matches)
         
-        let mapWinRates = UtilityService.getHighestFromMap(this.#getMapWinLoss(player, matches), 10)
+        let mapWinRates = UtilityService.getHighestFromMap(PlayerStatsService.#getMapWinLoss(player, matches), 10)
 
         let kd = 0
         let obj = 0
@@ -71,7 +71,7 @@ class PlayerStatsService {
 
     }
 
-    #getMapWinLoss(player, matches) {
+    static #getMapWinLoss(player, matches) {
 
         const winRates = new Map()
         maps.forEach(map => {
@@ -112,7 +112,7 @@ class PlayerStatsService {
 
     }
 
-    #getPlayerStatsObj(player, matches) {
+    static #getPlayerStatsObj(player, matches) {
         let kd = {
             hardpoint: {
                 kills: 0,
