@@ -2,23 +2,106 @@
 
 class CountService {
 
-    static getAllPlayerStats(matches) {
+    static getAllPlayerStats(matches, gamemode) {
         const playerStats = {}
-        matches.forEach((match) => {
-            match.winners.forEach((player) => {
-                CountService.#updateStats(playerStats, player, true)
+
+        if (gamemode != null) {
+            matches.forEach((match) => {
+                if (match.gamemode == gamemode) {
+                    match.winners.forEach((player) => {
+                        CountService.#updateStats(playerStats, player, true)
+                    })
+        
+                    match.losers.forEach((player) => {
+                        CountService.#updateStats(playerStats, player, false)
+                    })
+                }
             })
-
-            match.losers.forEach((player) => {
-                CountService.#updateStats(playerStats, player, false)
+    
+            Object.entries(playerStats).forEach(([key, value])=> {
+                value.kd = parseFloat(( value.deaths == 0 ? value.kills : value.kills / value.deaths )).toFixed(2)
+                value.wr = parseFloat(( value.totalMatches == 0 ? 0 : value.wins / value.totalMatches)*100).toFixed(1)
             })
-        })
+        } else {
+            matches.forEach((match) => {
+                match.winners.forEach((player) => {
+                    CountService.#updateStats(playerStats, player, true)
+                })
+    
+                match.losers.forEach((player) => {
+                    CountService.#updateStats(playerStats, player, false)
+                })
+            })
+    
+            Object.entries(playerStats).forEach(([key, value])=> {
+                value.kd = parseFloat(( value.deaths == 0 ? value.kills : value.kills / value.deaths )).toFixed(2)
+                value.wr = parseFloat(( value.totalMatches == 0 ? 0 : value.wins / value.totalMatches)*100).toFixed(1)
+            })
+        }
 
-        Object.entries(playerStats).forEach(([key, value])=> {
-            value.kd = parseFloat(( value.deaths == 0 ? value.kills : value.kills / value.deaths ).toFixed(2))
-            value.wr = parseFloat(( value.totalMatches == 0 ? 0 : value.wins / value.totalMatches).toFixed(3)*100)
-        })
+        
 
+        return playerStats
+    }
+
+    static getOnePlayerStats(matches, playerId, gamemode) {
+        const playerStats = {
+            kills: 0,
+            deaths: 0,
+            totalMatches: 0,
+            wins: 0,
+            losses: 0,
+            obj: 0
+        }
+        if (gamemode == null) {
+            matches.forEach(match => {
+                match.winners.forEach(player => {
+                    if (player.id == playerId) {
+                        playerStats.kills += player.kills
+                        playerStats.deaths += player.deaths
+                        playerStats.totalMatches = playerStats.totalMatches + 1
+                        playerStats.wins = playerStats.wins + 1
+                        playerStats.obj = playerStats.obj += player.obj
+                    }
+                })
+                match.losers.forEach(player => {
+                    if (player.id == playerId) {
+                        playerStats.kills += player.kills
+                        playerStats.deaths += player.deaths
+                        playerStats.totalMatches = playerStats.totalMatches + 1
+                        playerStats.losses = playerStats.losses + 1
+                        playerStats.obj = playerStats.obj += player.obj
+                    }
+                })
+            })
+        } else {
+            matches.forEach(match => {
+                if (match.gamemode == gamemode) {
+                    match.winners.forEach(player => {
+                        if (player.id == playerId) {
+                            playerStats.kills += player.kills
+                            playerStats.deaths += player.deaths
+                            playerStats.totalMatches = playerStats.totalMatches + 1
+                            playerStats.wins = playerStats.wins + 1
+                            playerStats.obj = playerStats.obj += player.obj
+                        }
+                    })
+                    match.losers.forEach(player => {
+                        if (player.id == playerId) {
+                            playerStats.kills += player.kills
+                            playerStats.deaths += player.deaths
+                            playerStats.totalMatches = playerStats.totalMatches + 1
+                            playerStats.losses = playerStats.losses + 1
+                            playerStats.obj = playerStats.obj += player.obj
+                        }
+                    })
+                }
+                
+            })
+        }
+
+        playerStats.kd = playerStats.kills / (playerStats.deaths == 0 ? 1 : playerStats.deaths)
+        playerStats.wr = playerStats.wins / (playerStats.totalMatches == 0 ? 1 : playerStats.totalMatches)
         return playerStats
     }
 

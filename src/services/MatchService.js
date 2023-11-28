@@ -46,6 +46,7 @@ class MatchService {
         matches.forEach(match => {
             if (MatchService.matchIncludesPlayer(playerId, match)) {
                 player_matches.push(match)
+                
             }
         })
         return player_matches

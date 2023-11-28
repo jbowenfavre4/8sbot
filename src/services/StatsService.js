@@ -13,7 +13,7 @@ class StatsService {
         console.log('Stats service created')
     }
 
-    generalStats() {
+    generalStats(gamemode) {
 
         let matches_list = MatchService.getMatches()
         let counted_data = CountService.getAllPlayerStats(matches_list)
@@ -42,9 +42,6 @@ class StatsService {
         CountService.sortPlayers(counted_data, 'totalMatches').forEach(player => {
             most_matches_s += `${player.totalMatches} - ${RegisterService.getName(player.id)}\n`
         })
-
-
-        console.log(most_kills_s)
 
         let embedData = [
             {
@@ -85,35 +82,6 @@ class StatsService {
             embedData)
     }
 
-    #countKills(jsonList, players) {
-        const kills = new Map([])
-        for (let i = 0; i < jsonList.length; i++) {
-            let match = jsonList[i]
-            for (let i = 0; i < match.winners.length; i++) {
-                let player = match.winners[i]
-                if (!kills.has(player.name)) {
-                    kills.set(player.name, 0)
-                }
-                kills.set(player.name, parseInt(kills.get(player.name)) + parseInt(player.kills))
-            }
-            for (let i = 0; i < match.losers.length; i++) {
-                let player = match.losers[i]
-                if (!kills.has(player.name)) {
-                    kills.set(player.name, 0)
-                }
-                kills.set(player.name, parseInt(kills.get(player.name)) + parseInt(player.kills))
-            }
-        }
-
-        players.forEach(player => {
-            let playerName = player.name
-            if (!kills.has(playerName)) {
-                kills.set(playerName, 0)
-            }
-        })
-
-        return kills
-    }
 }
 
 module.exports = StatsService

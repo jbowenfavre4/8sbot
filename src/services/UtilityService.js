@@ -21,8 +21,7 @@ class UtilityService {
         let s = ""
         map.forEach((value, key, map) => {
             // Note: The order of parameters in forEach is (value, key, map)
-            let playerData = value.toString().split(',')
-            s += `${[...map.keys()].indexOf(key) + 1}. ${playerData[0]}: ${playerData[1]}\n`;
+            s += `${[...map.keys()].indexOf(key) + 1}. ${key}: ${value}\n`;
           });
         return s
       }
@@ -57,6 +56,13 @@ class UtilityService {
         entriesArray.sort((a, b) => b[1] - a[1]);
         const topEntries = entriesArray.slice(0, i);
         return topEntries
+    }
+
+    static sortMapByValue(map) {
+        let array = Array.from(map)
+        array.sort((a,b) => b[1] - a[1])
+        let sortedMap = new Map(array)
+        return sortedMap
     }
 
 }

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const EmbedService = require('../../services/EmbedService')
+const MatchService = require('../../services/MatchService')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,7 +13,7 @@ module.exports = {
 	async execute(interaction) {
         const matchService = this.matchService
 
-        let match = matchService.getMatch(interaction.options.getString('id'))
+        let match = MatchService.getMatch(interaction.options.getString('id'))
 
         if (match != null) {
             if (match.winners.some(player => player.id === interaction.user.id) || match.losers.some(player => player.id === interaction.user.id)) {
