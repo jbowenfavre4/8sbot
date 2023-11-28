@@ -1,22 +1,35 @@
 const { SlashCommandBuilder } = require('discord.js');
+const { gamemodes } = require('../../data/gamemodes')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('player')
-		.setDescription('Name of player')
+		.setName('mystats')
+		.setDescription('Get your personal stats.')
         .addStringOption(option =>
-            option.setName('name')
-                .setDescription('Name of player')
-                .setRequired(true)),
+            option.setName('filter')
+                .setDescription('Use this is you would like to only see stats from a specific gamemode.')
+                .setRequired(false)
+                .addChoices(...gamemodes)),
 	async execute(interaction) {
-        const fileService = this.fileService
-        const statsService = this.statsService
+        const playerStatsService = this.playerStatsService
 
-        let player = interaction.options.getString('name')
+        let embed = ''
+        let filter = interaction.options.getString('filter')
+        switch (filter) {
+            case "snd":
+                embed = playerStatsService.getPlayerStats(interaction.user.id, "snd")
+                break;
+            case "hardpoint":
+                embed = playerStatsService.getPlayerStats(interaction.user.id, "hardpoint")
+                break
+            case "control":
+                embed = playerStatsService.getPlayerStats(interaction.user.id, "control")
+                break;
+            default:
+                embed = playerStatsService.getPlayerStats(interaction.user.id, null)
+        }
 
-        let playerMatches = fileService.getPlayerMatches(player)
-
-        await interaction.reply({ embeds: [statsService.playerStatsService.getPlayerStats(player, playerMatches)] })
+        await interaction.reply({ embeds: [embed] })
         
 		
 	},

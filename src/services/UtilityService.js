@@ -52,6 +52,13 @@ class UtilityService {
         fs.writeFileSync(file, data, 'utf-8');
     }
 
+    static getHighestFromMap(map, i) {
+        const entriesArray = Array.from(map.entries());
+        entriesArray.sort((a, b) => b[1] - a[1]);
+        const topEntries = entriesArray.slice(0, i);
+        return topEntries
+    }
+
 }
 
 module.exports = UtilityService

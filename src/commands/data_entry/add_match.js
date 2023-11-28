@@ -3,6 +3,7 @@ const RegisterService = require('../../services/RegisterService')
 const { gamemodes } = require('../../data/gamemodes')
 const { maps } = require('../../data/maps');
 const EmbedService = require('../../services/EmbedService')
+const MatchService = require('../../services/MatchService')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -119,11 +120,10 @@ module.exports = {
         names_map.set('loser3', interaction.options.getString('loser3'))
         names_map.set('loser4', interaction.options.getString('loser4'))
         
-        const matchService = this.matchService
 
         const match_id = generateUniqueId()
         
-        logAttempt = matchService.logMatch(interaction, match_id)
+        logAttempt = MatchService.logMatch(interaction, match_id)
         
         if (logAttempt != undefined) {
             let validation = ""

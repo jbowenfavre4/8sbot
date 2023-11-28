@@ -7,6 +7,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 require("dotenv").config();
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const PlayerStatsService = require("./src/services/PlayerStatsService");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 
@@ -15,6 +16,7 @@ const fileService = new FileService()
 const statsService = new StatsService()
 const registerService = new RegisterService()
 const matchService = new MatchService()
+const playerStatsService = new PlayerStatsService()
 
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
@@ -37,7 +39,8 @@ for (const folder of commandFolders) {
 				statsService: statsService, 
 				registerService: registerService,
 				directMessageService: directMessageService,
-				matchService: matchService
+				matchService: matchService,
+				playerStatsService: playerStatsService
 
 			});
 		} else {
