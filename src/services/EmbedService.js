@@ -22,6 +22,35 @@ class EmbedService {
         return embed
     }   
 
+    static getGroupInfoEmbed(group) {
+        const embed = new EmbedBuilder()
+            .setColor(0x0099FF)
+            .setTitle(`Group: ${group.name}`)
+            .setAuthor({ name: '8sbot', iconURL: 'https://pbs.twimg.com/media/EK-5nSWWsAAeQLJ?format=jpg&name=240x240'})
+            .setDescription(`Here is the group information for ${group.name}`)
+
+        let players = ""
+        group.players.forEach(player => {
+            players += RegisterService.getName(player.id) + "\n"
+        })
+
+        embed.addFields([
+            {
+                name: "Creator",
+                value: RegisterService.getName(group.creator) != null ? RegisterService.getName(group.creator) : "?",
+                inline: true
+            },
+            {
+                name: "Players",
+                value: players,
+                inline: false
+            }
+        ])
+
+        return embed
+
+    }
+
     static getPastMatchEmbed(match) {
         const mapObject = maps.find(map => map.value.toLowerCase() === match.map);
 

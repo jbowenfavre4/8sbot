@@ -93,7 +93,7 @@ class GroupService {
     }
 
     static matchIsGroup(match, group) {
-        let result = true
+        
         
     }
 
