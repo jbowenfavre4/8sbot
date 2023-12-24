@@ -13,8 +13,20 @@ class MatchService {
         console.log('MatchService created')
     }
 
-    static getMatches() {
-        return MatchService.#getFileContents(match_file)
+    static getMatches(gamemode) {
+        let matches = MatchService.#getFileContents(match_file)
+        if (gamemode == "hardpoint" || gamemode == "snd" || gamemode == "control") {
+            let retMatches = []
+            matches.forEach(match => {
+                if (match.gamemode == gamemode) {
+                    retMatches.push(match)
+                }
+            })
+            return retMatches
+        } else {
+            return matches
+        }
+        
     }
 
     static matchIncludesPlayer(playerId, match) {

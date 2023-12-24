@@ -3,7 +3,7 @@ const GroupService = require('../../services/GroupService')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('group')
+		.setName('creategroup')
 		.setDescription('Create a group with a unique name')
         .addStringOption(option =>
             option.setName('groupname')

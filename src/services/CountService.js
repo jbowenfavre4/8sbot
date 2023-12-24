@@ -132,12 +132,12 @@ class CountService {
 
     }
 
-    static sortPlayers(playerStats, criteria) {
+    static sortPlayers(playerStats, criteria, count) {
         const playersArray = Object.entries(playerStats)
 
         playersArray.sort(([, stats1], [, stats2]) => stats2[criteria] - stats1[criteria])
 
-        return playersArray.map(([playerId, stats]) => ({ id: playerId, ...stats }))
+        return playersArray.slice(0, count).map(([playerId, stats]) => ({ id: playerId, ...stats }))
     }
 
 }

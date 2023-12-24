@@ -92,6 +92,11 @@ class GroupService {
         return result
     }
 
+    static matchIsGroup(match, group) {
+        let result = true
+        
+    }
+
     static getGroup(name) {
         let found_group = null
         let groups = GroupService.getGroups()
