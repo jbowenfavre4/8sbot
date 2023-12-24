@@ -137,7 +137,13 @@ class CountService {
 
         playersArray.sort(([, stats1], [, stats2]) => stats2[criteria] - stats1[criteria])
 
-        return playersArray.slice(0, count).map(([playerId, stats]) => ({ id: playerId, ...stats }))
+        if (count != null && Number.isInteger(count)) {
+            return playersArray.slice(0, count).map(([playerId, stats]) => ({ id: playerId, ...stats }))
+        } else {
+            return playersArray.map(([playerId, stats]) => ({ id: playerId, ...stats }))
+        }
+
+        
     }
 
 }
