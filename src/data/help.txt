@@ -14,7 +14,17 @@ Objective score:
     For SnD, objective score is number of plants.
     For Control, objectve score is number of captures. 
 
-/general - displays overall stats based on all recorded matches. 
+/general - displays top 5 in the main stats for all recorded matches
+
+Groups - used to look at stats that only include a specific group of people. There is no limit to how many players can be in a group. When using the /groupstats command, you will only see stats for games where all 8 players are part of the group.
+
+/group - view the list of players in a group. You must be in the group to view the list.
+
+/groupstats - view the stats for a group that you are in. Will show stats for all players, unlike the /general command, which shows top 5 only. You can add a gamemode filter to this command.
+
+/creategroup - create a group with a name. The name must be unique. You will automatically be added to the group when you create it. 
+
+/addtogroup - add a player to your group. You must be the creator of the group to add people.
 
 /help - displays this message. 
 
