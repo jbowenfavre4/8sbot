@@ -16,9 +16,9 @@ module.exports = {
 		let embed = ""
 		let gamemode_filter = interaction.options.getString('gamemode')
 		if (gamemode_filter != null) {
-			embed = statsService.generalStats(gamemode_filter)
+			embed = statsService.generalStats(gamemode_filter, null)
 		} else {
-			embed = statsService.generalStats(null)
+			embed = statsService.generalStats(null, null)
 		}
         
         await interaction.reply({ embeds: [embed] })

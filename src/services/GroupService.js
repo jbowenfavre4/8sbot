@@ -93,8 +93,24 @@ class GroupService {
     }
 
     static matchIsGroup(match, group) {
-        
-        
+        let flag = true
+        let group_data = this.getGroup(group)
+        if (group_data == null) {
+            return false
+        }
+        match.winners.forEach(player => {
+            if (this.checkIfPlayerInGroup(group, player.id) == null) {
+                flag = false
+                return false
+            }
+        })
+        match.losers.forEach(player => {
+            if (this.checkIfPlayerInGroup(group, player.id) == null) {
+                flag = false
+                return false
+            }
+        })
+        return flag
     }
 
     static getGroup(name) {

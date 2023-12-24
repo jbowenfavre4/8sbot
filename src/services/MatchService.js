@@ -1,6 +1,7 @@
 const { match } = require("assert")
 const UtilityService = require("./UtilityService")
 const fs = require('fs')
+const GroupService = require("./GroupService")
 
 const kdo_regex = /^\d+\/\d+\/\d+$/
 
@@ -58,7 +59,6 @@ class MatchService {
         matches.forEach(match => {
             if (MatchService.matchIncludesPlayer(playerId, match)) {
                 player_matches.push(match)
-                
             }
         })
         return player_matches
@@ -73,6 +73,25 @@ class MatchService {
             }
         })
         return player_matches
+    }
+
+    static getMatchesByGroup(group_name, gamemode) {
+        let matches = MatchService.#getFileContents(match_file)
+        let filtered_matches = []
+        if (gamemode != null && gamemode != "") {
+            matches.forEach(match => {
+                if (match.gamemode == gamemode && GroupService.matchIsGroup(match, group_name)) {
+                    filtered_matches.push(match)
+                }
+            })
+        } else {
+            matches.forEach(match => {
+                if (GroupService.matchIsGroup(match, group_name)) {
+                    filtered_matches.push(match)
+                }
+            })
+        }
+        return filtered_matches
     }
 
     static getMatch(id) {
