@@ -5,15 +5,17 @@ const PlayerStatsService = require('./PlayerStatsService');
 const CountService = require('./CountService');
 const RegisterService = require('./RegisterService');
 
+const DEFAULT_STAT_DISPLAY_COUNT = 5
+
 class StatsService {
 
     constructor() {
-
         this.playerStatsService = PlayerStatsService
         console.log('Stats service created')
     }
 
     generalStats(gamemode) {
+        
         let matches_list = []
         let gamemode_name = null
         if (gamemode == "hardpoint" || gamemode == "snd" || gamemode == "control") {
@@ -26,27 +28,27 @@ class StatsService {
         let counted_data = CountService.getAllPlayerStats(matches_list)
 
         let most_kills_s = ``
-        CountService.sortPlayers(counted_data, 'kills', 5).forEach(player => {
+        CountService.sortPlayers(counted_data, 'kills', DEFAULT_STAT_DISPLAY_COUNT).forEach(player => {
             most_kills_s += `${player.kills} - ${RegisterService.getName(player.id)}\n`
         })
 
         let best_kd_s = ``
-        CountService.sortPlayers(counted_data, 'kd', 5).forEach(player => {
+        CountService.sortPlayers(counted_data, 'kd', DEFAULT_STAT_DISPLAY_COUNT).forEach(player => {
             best_kd_s += `${player.kd} - ${RegisterService.getName(player.id)}\n`
         })
 
         let best_wr_s = ``
-        CountService.sortPlayers(counted_data, 'wr', 5).forEach(player => {
+        CountService.sortPlayers(counted_data, 'wr', DEFAULT_STAT_DISPLAY_COUNT).forEach(player => {
             best_wr_s += `${player.wr} - ${RegisterService.getName(player.id)}\n`
         })
 
         let most_wins_s = ``
-        CountService.sortPlayers(counted_data, 'wins', 5).forEach(player => {
+        CountService.sortPlayers(counted_data, 'wins', DEFAULT_STAT_DISPLAY_COUNT).forEach(player => {
             most_wins_s += `${player.wins} - ${RegisterService.getName(player.id)}\n`
         })
 
         let most_matches_s = ``
-        CountService.sortPlayers(counted_data, 'totalMatches', 5).forEach(player => {
+        CountService.sortPlayers(counted_data, 'totalMatches', DEFAULT_STAT_DISPLAY_COUNT).forEach(player => {
             most_matches_s += `${player.totalMatches} - ${RegisterService.getName(player.id)}\n`
         })
 
@@ -93,10 +95,8 @@ class StatsService {
                 `General Stats for ${gamemode_name}`, 
                 `---------- A list of ${gamemode_name} stats based on all recorded matches. ----------`,
                 embedData)
-        }
-        
+        }   
     }
-
 }
 
 module.exports = StatsService
