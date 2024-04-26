@@ -9,7 +9,7 @@ files:
   - source: /
     destination: /8sbot
 hooks:
-  BeforeInstall:
+  AfterInstall:
   - location: configure.sh
     timeout: 300
     runas: root
