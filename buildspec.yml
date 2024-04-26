@@ -1,4 +1,9 @@
 version: 0.2
+env:
+  parameter-store:
+    BOT_TOKEN: "/jr/bot_token"
+    CLIENT_ID: "/jr/client_id"
+    SERVER_ID: "/jr/server_id"
 phases:
   install:
     commands:
