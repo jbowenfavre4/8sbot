@@ -1,4 +1,4 @@
-!#/usr/bin/node
+#!/usr/bin/node
 const FileService = require("./src/services/FileService");
 const StatsService = require("./src/services/StatsService")
 const RegisterService = require("./src/services/RegisterService")
