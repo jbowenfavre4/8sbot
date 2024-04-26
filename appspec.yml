@@ -9,10 +9,6 @@ files:
   - source: /
     destination: /8sbot
 hooks:
-  AfterInstall:
-  - location: configure.sh
-    timeout: 300
-    runas: root
   ApplicationStart:
     - location: start_app.sh
       timeout: 300
