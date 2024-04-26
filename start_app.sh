@@ -20,4 +20,4 @@ ls
 # Run npm install to install dependencies
 npm install
 
-node index.js
+node index.js > /dev/null 2>&1 &
