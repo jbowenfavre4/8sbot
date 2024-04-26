@@ -5,6 +5,6 @@ files:
     destination: /8sbot
 hooks:
   ApplicationStart:
-    - location: node index.js
+    - location: index.js
       timeout: 300
       runas: root
