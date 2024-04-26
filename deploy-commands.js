@@ -8,6 +8,8 @@ const commands = [];
 const foldersPath = path.join(__dirname, 'src/commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
+console.log("TEST: ", process.env.BOT_TOKEN)
+
 
 for (const folder of commandFolders) {
 	// Grab all the command files from the commands directory you created earlier
@@ -34,6 +36,7 @@ const rest = new REST().setToken(process.env.BOT_TOKEN);
 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
 		// The put method is used to fully refresh all commands in the guild with the current set
+		
 		const data = await rest.put(
 			Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.SERVER_ID),
 			{ body: commands },
