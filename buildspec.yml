@@ -7,7 +7,5 @@ env:
 phases:
   install:
     commands:
-      - ls -la
-      - cd /8sbot
       - npm install
       - node deploy-commands.js
