@@ -87,5 +87,5 @@ client.on(Events.InteractionCreate, async interaction => {
 		}
 	}
 });
-console.log(process.env.BOT_TOKEN)
+console.log("THIS IS A TEST: ", process.env.BOT_TOKEN)
 client.login(process.env.BOT_TOKEN);
