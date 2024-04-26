@@ -1,0 +1,14 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /8sbot
+hooks:
+  AfterInstall:
+    - location: node deploy-commands.js
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: node index.js
+      timeout: 300
+      runas: root

@@ -8,7 +8,6 @@ const commands = [];
 const foldersPath = path.join(__dirname, 'src/commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
-console.log("test: ", process.env.BOT_TOKEN)
 
 for (const folder of commandFolders) {
 	// Grab all the command files from the commands directory you created earlier
