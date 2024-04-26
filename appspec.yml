@@ -5,6 +5,6 @@ files:
     destination: /8sbot
 hooks:
   ApplicationStart:
-    - location: index.js
+    - location: start_app.sh
       timeout: 300
       runas: root
