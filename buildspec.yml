@@ -4,6 +4,8 @@ env:
     BOT_TOKEN: "/jr/bot_token"
     CLIENT_ID: "/jr/client_id"
     SERVER_ID: "/jr/server_id"
+  variables: 
+    NODE_PATH: "/8sbot/node_modules"
 phases:
   install:
     commands:
