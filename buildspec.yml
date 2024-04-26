@@ -3,6 +3,7 @@ phases:
   install:
     commands:
       - npm install
-  build:
+      - node deploy-commands.js
+  run: 
     commands:
-      - npm run build
+      - node index.js
