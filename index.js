@@ -11,6 +11,8 @@ const PlayerStatsService = require("./src/services/PlayerStatsService");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 
+
+// test
 const directMessageService = new DirectMessageService(client)
 const fileService = new FileService()
 const statsService = new StatsService()
